@@ -1,0 +1,205 @@
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE TABLE "comments" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "link_id" integer, "body" text, "user_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.3ms)[0m  [1m[34mselect sqlite_version(*)[0m
+  [1m[35m (0.6ms)[0m  [1m[35mCREATE  INDEX "index_comments_on_link_id" ON "comments" ("link_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_comments_on_link_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_comments_on_link_id' AND type='index'
+[0m
+  [1m[35m (0.6ms)[0m  [1m[35mCREATE  INDEX "index_comments_on_user_id" ON "comments" ("user_id")[0m
+  [1m[35m (0.6ms)[0m  [1m[35mCREATE TABLE "links" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar, "url" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "user_id" integer)[0m
+  [1m[35m (0.6ms)[0m  [1m[35mCREATE  INDEX "index_links_on_user_id" ON "links" ("user_id")[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar DEFAULT '' NOT NULL, "encrypted_password" varchar DEFAULT '' NOT NULL, "reset_password_token" varchar, "reset_password_sent_at" datetime, "remember_created_at" datetime, "sign_in_count" integer DEFAULT 0 NOT NULL, "current_sign_in_at" datetime, "last_sign_in_at" datetime, "current_sign_in_ip" varchar, "last_sign_in_ip" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.5ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_users_on_email" ON "users" ("email")[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_email' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_email' AND type='index'
+[0m
+  [1m[35m (0.6ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_users_on_reset_password_token" ON "users" ("reset_password_token")[0m
+  [1m[35m (0.6ms)[0m  [1m[35mCREATE TABLE "votes" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "votable_type" varchar, "votable_id" integer, "voter_type" varchar, "voter_id" integer, "vote_flag" boolean, "vote_scope" varchar, "vote_weight" integer, "created_at" datetime, "updated_at" datetime)[0m
+  [1m[35m (0.6ms)[0m  [1m[35mCREATE  INDEX "index_votes_on_votable_id_and_votable_type_and_vote_scope" ON "votes" ("votable_id", "votable_type", "vote_scope")[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_votes_on_votable_id_and_votable_type_and_vote_scope' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_votes_on_votable_id_and_votable_type_and_vote_scope' AND type='index'
+[0m
+  [1m[35m (0.6ms)[0m  [1m[35mCREATE  INDEX "index_votes_on_voter_id_and_voter_type_and_vote_scope" ON "votes" ("voter_id", "voter_type", "vote_scope")[0m
+  [1m[35m (0.6ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT version FROM "schema_migrations"[0m
+  [1m[35m (0.5ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES ('20161130224536')[0m
+  [1m[35m (0.5ms)[0m  [1m[32mINSERT INTO schema_migrations (version) VALUES ('20161129220219'), ('20161130023227'), ('20161130134041'), ('20161130221912');
+
+[0m
+  [1m[35m (0.5ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", :environment], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "test"], ["created_at", 2016-12-01 14:29:49 UTC], ["updated_at", 2016-12-01 14:29:49 UTC]]
+  [1m[35m (0.5ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", :environment], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.3ms)[0m  [1m[31mDELETE FROM "comments"[0m
+  [1m[36mFixture Insert (0.2ms)[0m  [1m[32mINSERT INTO "comments" ("link_id", "body", "created_at", "updated_at", "id", "user_id") VALUES (1, 'MyText', '2016-12-01 14:29:49.363086', '2016-12-01 14:29:49.363086', 980190962, 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "comments" ("link_id", "body", "created_at", "updated_at", "id", "user_id") VALUES (1, 'MyText', '2016-12-01 14:29:49.363086', '2016-12-01 14:29:49.363086', 298486374, 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "links"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "links" ("title", "url", "created_at", "updated_at", "id") VALUES ('MyString', 'MyString', '2016-12-01 14:29:49.368189', '2016-12-01 14:29:49.368189', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "links" ("title", "url", "created_at", "updated_at", "id") VALUES ('MyString', 'MyString', '2016-12-01 14:29:49.368189', '2016-12-01 14:29:49.368189', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "users"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2016-12-01 14:29:49.370034', '2016-12-01 14:29:49.370034', 980190962)[0m
+  [1m[36mFixture Insert (0.2ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2016-12-01 14:29:49.370034', '2016-12-01 14:29:49.370034', 298486374)[0m
+  [1m[35m (0.4ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.2ms)[0m  [1m[31mDELETE FROM "comments"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "comments" ("link_id", "body", "created_at", "updated_at", "id", "user_id") VALUES (1, 'MyText', '2016-12-01 14:29:49.715539', '2016-12-01 14:29:49.715539', 980190962, 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "comments" ("link_id", "body", "created_at", "updated_at", "id", "user_id") VALUES (1, 'MyText', '2016-12-01 14:29:49.715539', '2016-12-01 14:29:49.715539', 298486374, 298486374)[0m
+  [1m[36mFixture Delete (0.0ms)[0m  [1m[31mDELETE FROM "links"[0m
+  [1m[36mFixture Insert (0.0ms)[0m  [1m[32mINSERT INTO "links" ("title", "url", "created_at", "updated_at", "id") VALUES ('MyString', 'MyString', '2016-12-01 14:29:49.716969', '2016-12-01 14:29:49.716969', 980190962)[0m
+  [1m[36mFixture Insert (0.0ms)[0m  [1m[32mINSERT INTO "links" ("title", "url", "created_at", "updated_at", "id") VALUES ('MyString', 'MyString', '2016-12-01 14:29:49.716969', '2016-12-01 14:29:49.716969', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "users"[0m
+  [1m[36mFixture Insert (0.0ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2016-12-01 14:29:49.717845', '2016-12-01 14:29:49.717845', 980190962)[0m
+  [1m[36mFixture Insert (0.2ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2016-12-01 14:29:49.717845', '2016-12-01 14:29:49.717845', 298486374)[0m
+  [1m[35m (0.3ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "comments"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "comments" ("link_id", "body", "created_at", "updated_at", "id", "user_id") VALUES (1, 'MyText', '2016-12-01 14:29:49.722133', '2016-12-01 14:29:49.722133', 980190962, 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "comments" ("link_id", "body", "created_at", "updated_at", "id", "user_id") VALUES (1, 'MyText', '2016-12-01 14:29:49.722133', '2016-12-01 14:29:49.722133', 298486374, 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "links"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "links" ("title", "url", "created_at", "updated_at", "id") VALUES ('MyString', 'MyString', '2016-12-01 14:29:49.723449', '2016-12-01 14:29:49.723449', 980190962)[0m
+  [1m[36mFixture Insert (0.0ms)[0m  [1m[32mINSERT INTO "links" ("title", "url", "created_at", "updated_at", "id") VALUES ('MyString', 'MyString', '2016-12-01 14:29:49.723449', '2016-12-01 14:29:49.723449', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "users"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2016-12-01 14:29:49.724429', '2016-12-01 14:29:49.724429', 980190962)[0m
+  [1m[36mFixture Insert (0.2ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2016-12-01 14:29:49.724429', '2016-12-01 14:29:49.724429', 298486374)[0m
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "comments"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "comments" ("link_id", "body", "created_at", "updated_at", "id", "user_id") VALUES (1, 'MyText', '2016-12-01 14:29:49.728416', '2016-12-01 14:29:49.728416', 980190962, 980190962)[0m
+  [1m[36mFixture Insert (0.0ms)[0m  [1m[32mINSERT INTO "comments" ("link_id", "body", "created_at", "updated_at", "id", "user_id") VALUES (1, 'MyText', '2016-12-01 14:29:49.728416', '2016-12-01 14:29:49.728416', 298486374, 298486374)[0m
+  [1m[36mFixture Delete (0.0ms)[0m  [1m[31mDELETE FROM "links"[0m
+  [1m[36mFixture Insert (0.0ms)[0m  [1m[32mINSERT INTO "links" ("title", "url", "created_at", "updated_at", "id") VALUES ('MyString', 'MyString', '2016-12-01 14:29:49.729456', '2016-12-01 14:29:49.729456', 980190962)[0m
+  [1m[36mFixture Insert (0.0ms)[0m  [1m[32mINSERT INTO "links" ("title", "url", "created_at", "updated_at", "id") VALUES ('MyString', 'MyString', '2016-12-01 14:29:49.729456', '2016-12-01 14:29:49.729456', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "users"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2016-12-01 14:29:49.730271', '2016-12-01 14:29:49.730271', 980190962)[0m
+  [1m[36mFixture Insert (0.2ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2016-12-01 14:29:49.730271', '2016-12-01 14:29:49.730271', 298486374)[0m
+  [1m[35m (0.3ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.2ms)[0m  [1m[31mDELETE FROM "comments"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "comments" ("link_id", "body", "created_at", "updated_at", "id", "user_id") VALUES (1, 'MyText', '2016-12-01 14:29:49.734716', '2016-12-01 14:29:49.734716', 980190962, 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "comments" ("link_id", "body", "created_at", "updated_at", "id", "user_id") VALUES (1, 'MyText', '2016-12-01 14:29:49.734716', '2016-12-01 14:29:49.734716', 298486374, 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "links"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "links" ("title", "url", "created_at", "updated_at", "id") VALUES ('MyString', 'MyString', '2016-12-01 14:29:49.736007', '2016-12-01 14:29:49.736007', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "links" ("title", "url", "created_at", "updated_at", "id") VALUES ('MyString', 'MyString', '2016-12-01 14:29:49.736007', '2016-12-01 14:29:49.736007', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "users"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2016-12-01 14:29:49.737180', '2016-12-01 14:29:49.737180', 980190962)[0m
+  [1m[36mFixture Insert (0.2ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2016-12-01 14:29:49.737180', '2016-12-01 14:29:49.737180', 298486374)[0m
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "comments"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "comments" ("link_id", "body", "created_at", "updated_at", "id", "user_id") VALUES (1, 'MyText', '2016-12-01 14:29:49.741128', '2016-12-01 14:29:49.741128', 980190962, 980190962)[0m
+  [1m[36mFixture Insert (0.0ms)[0m  [1m[32mINSERT INTO "comments" ("link_id", "body", "created_at", "updated_at", "id", "user_id") VALUES (1, 'MyText', '2016-12-01 14:29:49.741128', '2016-12-01 14:29:49.741128', 298486374, 298486374)[0m
+  [1m[36mFixture Delete (0.0ms)[0m  [1m[31mDELETE FROM "links"[0m
+  [1m[36mFixture Insert (0.0ms)[0m  [1m[32mINSERT INTO "links" ("title", "url", "created_at", "updated_at", "id") VALUES ('MyString', 'MyString', '2016-12-01 14:29:49.742224', '2016-12-01 14:29:49.742224', 980190962)[0m
+  [1m[36mFixture Insert (0.0ms)[0m  [1m[32mINSERT INTO "links" ("title", "url", "created_at", "updated_at", "id") VALUES ('MyString', 'MyString', '2016-12-01 14:29:49.742224', '2016-12-01 14:29:49.742224', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "users"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2016-12-01 14:29:49.743037', '2016-12-01 14:29:49.743037', 980190962)[0m
+  [1m[36mFixture Insert (0.2ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2016-12-01 14:29:49.743037', '2016-12-01 14:29:49.743037', 298486374)[0m
+  [1m[35m (0.4ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.2ms)[0m  [1m[31mDELETE FROM "comments"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "comments" ("link_id", "body", "created_at", "updated_at", "id", "user_id") VALUES (1, 'MyText', '2016-12-01 14:29:49.747527', '2016-12-01 14:29:49.747527', 980190962, 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "comments" ("link_id", "body", "created_at", "updated_at", "id", "user_id") VALUES (1, 'MyText', '2016-12-01 14:29:49.747527', '2016-12-01 14:29:49.747527', 298486374, 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "links"[0m
+  [1m[36mFixture Insert (0.0ms)[0m  [1m[32mINSERT INTO "links" ("title", "url", "created_at", "updated_at", "id") VALUES ('MyString', 'MyString', '2016-12-01 14:29:49.748899', '2016-12-01 14:29:49.748899', 980190962)[0m
+  [1m[36mFixture Insert (0.0ms)[0m  [1m[32mINSERT INTO "links" ("title", "url", "created_at", "updated_at", "id") VALUES ('MyString', 'MyString', '2016-12-01 14:29:49.748899', '2016-12-01 14:29:49.748899', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "users"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2016-12-01 14:29:49.749779', '2016-12-01 14:29:49.749779', 980190962)[0m
+  [1m[36mFixture Insert (0.3ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2016-12-01 14:29:49.749779', '2016-12-01 14:29:49.749779', 298486374)[0m
+  [1m[35m (0.3ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "comments"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "comments" ("link_id", "body", "created_at", "updated_at", "id", "user_id") VALUES (1, 'MyText', '2016-12-01 14:29:49.755402', '2016-12-01 14:29:49.755402', 980190962, 980190962)[0m
+  [1m[36mFixture Insert (0.0ms)[0m  [1m[32mINSERT INTO "comments" ("link_id", "body", "created_at", "updated_at", "id", "user_id") VALUES (1, 'MyText', '2016-12-01 14:29:49.755402', '2016-12-01 14:29:49.755402', 298486374, 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "links"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "links" ("title", "url", "created_at", "updated_at", "id") VALUES ('MyString', 'MyString', '2016-12-01 14:29:49.756652', '2016-12-01 14:29:49.756652', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "links" ("title", "url", "created_at", "updated_at", "id") VALUES ('MyString', 'MyString', '2016-12-01 14:29:49.756652', '2016-12-01 14:29:49.756652', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "users"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2016-12-01 14:29:49.757560', '2016-12-01 14:29:49.757560', 980190962)[0m
+  [1m[36mFixture Insert (0.2ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2016-12-01 14:29:49.757560', '2016-12-01 14:29:49.757560', 298486374)[0m
+  [1m[35m (0.3ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.2ms)[0m  [1m[31mDELETE FROM "comments"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "comments" ("link_id", "body", "created_at", "updated_at", "id", "user_id") VALUES (1, 'MyText', '2016-12-01 14:29:49.762342', '2016-12-01 14:29:49.762342', 980190962, 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "comments" ("link_id", "body", "created_at", "updated_at", "id", "user_id") VALUES (1, 'MyText', '2016-12-01 14:29:49.762342', '2016-12-01 14:29:49.762342', 298486374, 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "links"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "links" ("title", "url", "created_at", "updated_at", "id") VALUES ('MyString', 'MyString', '2016-12-01 14:29:49.763589', '2016-12-01 14:29:49.763589', 980190962)[0m
+  [1m[36mFixture Insert (0.0ms)[0m  [1m[32mINSERT INTO "links" ("title", "url", "created_at", "updated_at", "id") VALUES ('MyString', 'MyString', '2016-12-01 14:29:49.763589', '2016-12-01 14:29:49.763589', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "users"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2016-12-01 14:29:49.764538', '2016-12-01 14:29:49.764538', 980190962)[0m
+  [1m[36mFixture Insert (0.2ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2016-12-01 14:29:49.764538', '2016-12-01 14:29:49.764538', 298486374)[0m
+  [1m[35m (0.3ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.2ms)[0m  [1m[31mDELETE FROM "comments"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "comments" ("link_id", "body", "created_at", "updated_at", "id", "user_id") VALUES (1, 'MyText', '2016-12-01 14:29:49.769083', '2016-12-01 14:29:49.769083', 980190962, 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "comments" ("link_id", "body", "created_at", "updated_at", "id", "user_id") VALUES (1, 'MyText', '2016-12-01 14:29:49.769083', '2016-12-01 14:29:49.769083', 298486374, 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "links"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "links" ("title", "url", "created_at", "updated_at", "id") VALUES ('MyString', 'MyString', '2016-12-01 14:29:49.770558', '2016-12-01 14:29:49.770558', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "links" ("title", "url", "created_at", "updated_at", "id") VALUES ('MyString', 'MyString', '2016-12-01 14:29:49.770558', '2016-12-01 14:29:49.770558', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "users"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2016-12-01 14:29:49.771684', '2016-12-01 14:29:49.771684', 980190962)[0m
+  [1m[36mFixture Insert (0.2ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2016-12-01 14:29:49.771684', '2016-12-01 14:29:49.771684', 298486374)[0m
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "comments"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "comments" ("link_id", "body", "created_at", "updated_at", "id", "user_id") VALUES (1, 'MyText', '2016-12-01 14:29:49.776040', '2016-12-01 14:29:49.776040', 980190962, 980190962)[0m
+  [1m[36mFixture Insert (0.0ms)[0m  [1m[32mINSERT INTO "comments" ("link_id", "body", "created_at", "updated_at", "id", "user_id") VALUES (1, 'MyText', '2016-12-01 14:29:49.776040', '2016-12-01 14:29:49.776040', 298486374, 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "links"[0m
+  [1m[36mFixture Insert (0.0ms)[0m  [1m[32mINSERT INTO "links" ("title", "url", "created_at", "updated_at", "id") VALUES ('MyString', 'MyString', '2016-12-01 14:29:49.777193', '2016-12-01 14:29:49.777193', 980190962)[0m
+  [1m[36mFixture Insert (0.0ms)[0m  [1m[32mINSERT INTO "links" ("title", "url", "created_at", "updated_at", "id") VALUES ('MyString', 'MyString', '2016-12-01 14:29:49.777193', '2016-12-01 14:29:49.777193', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "users"[0m
+  [1m[36mFixture Insert (0.0ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2016-12-01 14:29:49.778089', '2016-12-01 14:29:49.778089', 980190962)[0m
+  [1m[36mFixture Insert (0.2ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2016-12-01 14:29:49.778089', '2016-12-01 14:29:49.778089', 298486374)[0m
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "comments"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "comments" ("link_id", "body", "created_at", "updated_at", "id", "user_id") VALUES (1, 'MyText', '2016-12-01 14:29:49.781896', '2016-12-01 14:29:49.781896', 980190962, 980190962)[0m
+  [1m[36mFixture Insert (0.0ms)[0m  [1m[32mINSERT INTO "comments" ("link_id", "body", "created_at", "updated_at", "id", "user_id") VALUES (1, 'MyText', '2016-12-01 14:29:49.781896', '2016-12-01 14:29:49.781896', 298486374, 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "links"[0m
+  [1m[36mFixture Insert (0.0ms)[0m  [1m[32mINSERT INTO "links" ("title", "url", "created_at", "updated_at", "id") VALUES ('MyString', 'MyString', '2016-12-01 14:29:49.782994', '2016-12-01 14:29:49.782994', 980190962)[0m
+  [1m[36mFixture Insert (0.0ms)[0m  [1m[32mINSERT INTO "links" ("title", "url", "created_at", "updated_at", "id") VALUES ('MyString', 'MyString', '2016-12-01 14:29:49.782994', '2016-12-01 14:29:49.782994', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "users"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2016-12-01 14:29:49.783873', '2016-12-01 14:29:49.783873', 980190962)[0m
+  [1m[36mFixture Insert (0.6ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2016-12-01 14:29:49.783873', '2016-12-01 14:29:49.783873', 298486374)[0m
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.2ms)[0m  [1m[31mDELETE FROM "comments"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "comments" ("link_id", "body", "created_at", "updated_at", "id", "user_id") VALUES (1, 'MyText', '2016-12-01 14:29:49.788934', '2016-12-01 14:29:49.788934', 980190962, 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "comments" ("link_id", "body", "created_at", "updated_at", "id", "user_id") VALUES (1, 'MyText', '2016-12-01 14:29:49.788934', '2016-12-01 14:29:49.788934', 298486374, 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "links"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "links" ("title", "url", "created_at", "updated_at", "id") VALUES ('MyString', 'MyString', '2016-12-01 14:29:49.790468', '2016-12-01 14:29:49.790468', 980190962)[0m
+  [1m[36mFixture Insert (0.0ms)[0m  [1m[32mINSERT INTO "links" ("title", "url", "created_at", "updated_at", "id") VALUES ('MyString', 'MyString', '2016-12-01 14:29:49.790468', '2016-12-01 14:29:49.790468', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "users"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2016-12-01 14:29:49.791568', '2016-12-01 14:29:49.791568', 980190962)[0m
+  [1m[36mFixture Insert (0.2ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2016-12-01 14:29:49.791568', '2016-12-01 14:29:49.791568', 298486374)[0m
+  [1m[35m (0.7ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.2ms)[0m  [1m[31mDELETE FROM "comments"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "comments" ("link_id", "body", "created_at", "updated_at", "id", "user_id") VALUES (1, 'MyText', '2016-12-01 14:29:49.796633', '2016-12-01 14:29:49.796633', 980190962, 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "comments" ("link_id", "body", "created_at", "updated_at", "id", "user_id") VALUES (1, 'MyText', '2016-12-01 14:29:49.796633', '2016-12-01 14:29:49.796633', 298486374, 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "links"[0m
+  [1m[36mFixture Insert (0.6ms)[0m  [1m[32mINSERT INTO "links" ("title", "url", "created_at", "updated_at", "id") VALUES ('MyString', 'MyString', '2016-12-01 14:29:49.799148', '2016-12-01 14:29:49.799148', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "links" ("title", "url", "created_at", "updated_at", "id") VALUES ('MyString', 'MyString', '2016-12-01 14:29:49.799148', '2016-12-01 14:29:49.799148', 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "users"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2016-12-01 14:29:49.800678', '2016-12-01 14:29:49.800678', 980190962)[0m
+  [1m[36mFixture Insert (0.2ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2016-12-01 14:29:49.800678', '2016-12-01 14:29:49.800678', 298486374)[0m
+  [1m[35m (0.3ms)[0m  [1m[31mrollback transaction[0m
